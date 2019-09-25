@@ -20,7 +20,10 @@ enum custom_keycodes {
   SYMB,
   NAV,
   ADJUST,
+  DYNAMIC_MACRO_RANGE,
 };
+
+#include "dynamic_macro.h"
 
 // Shortcut to make keymap more readable
 #define KC_BKSL KC_BSLASH
@@ -35,9 +38,8 @@ enum custom_keycodes {
 #define KC_ADEN LT(_ADJUST, KC_END)
 #define KC_ADPU LT(_ADJUST, KC_PGUP)
 
-// Italian specific shortcuts
-#define ALT_IACC RALT_T(DE_IACC)
-#define GUI_LESS LGUI_T(DE_LESS)
+// german specific shortcuts
+#define DE_LOE LSFT(DE_OE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
@@ -46,11 +48,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB  ,DE_Q    ,DE_W    ,DE_E    ,DE_R    ,DE_T    ,DE_GRV  ,                          KC_F6   ,DE_Y    ,DE_U    ,DE_I    ,DE_O    ,DE_P    ,DE_UE   ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_BSPC ,DE_A    ,DE_S    ,DE_D    ,DE_F    ,DE_G    ,KC_INS  ,                          KC_DEL  ,DE_H    ,DE_J    ,DE_K    ,DE_L    ,LT(2,DE_OE),RGUI(DE_AE),
+     KC_BSPC ,DE_A    ,DE_S    ,DE_D    ,DE_F    ,DE_G    ,KC_INS  ,                          KC_DEL  ,DE_H    ,DE_J    ,DE_K    ,DE_L    ,LT(_NAV,DE_OE),RGUI(DE_AE),
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     MO(1)   ,DE_Z    ,DE_X    ,DE_C    ,DE_V    ,DE_B    ,KC_APP  ,KC_LGUI ,        KC_HOME ,TT(1)   ,DE_N    ,DE_M    ,DE_COMM ,DE_DOT  ,DE_SLSH ,DE_SCLN ,
+     MO(_SHIFTED),DE_Z,DE_X    ,DE_C    ,DE_V    ,DE_B    ,KC_APP  ,KC_LGUI ,        KC_HOME ,TG(_SYMB),DE_N   ,DE_M    ,DE_COMM ,DE_DOT  ,DE_SLSH ,DE_SCLN ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     KC_LCTL ,DE_QUOT ,MO(2)   ,KC_LALT ,     MO(1)   ,    KC_SPC  ,KC_ENT  ,        KC_ENT  ,MO(2)   ,    KC_SPC  ,     KC_RALT ,KC_RALT ,DE_MINS ,KC_RCTL
+     KC_LCTL ,DE_QUOT ,KC_LALT ,KC_LALT ,     MO(_SYMB),   KC_SPC  ,KC_ENT  ,        KC_ENT  ,MO(_NAV),    KC_SPC  ,     KC_RALT ,KC_RALT ,DE_MINS ,KC_RCTL
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
@@ -60,9 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      LSFT(KC_TAB  ),LSFT(DE_Q    ),LSFT(DE_W    ),LSFT(DE_E    ),LSFT(DE_R    ),LSFT(DE_T    ),LSFT(DE_GRV  ),                          LSFT(KC_F6   ),LSFT(DE_Y    ),LSFT(DE_U    ),LSFT(DE_I    ),LSFT(DE_O    ),LSFT(DE_P    ),LSFT(DE_UE),
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     LSFT(KC_BSPC ),LSFT(DE_A    ),LSFT(DE_S    ),LSFT(DE_D    ),LSFT(DE_F    ),LSFT(DE_G    ),LSFT(KC_INS  ),                          LSFT(KC_DEL  ),LSFT(DE_H    ),LSFT(DE_J    ),LSFT(DE_K    ),LSFT(DE_L    ),LT(2,LSFT(DE_OE)),RGUI(LSFT(DE_AE)),
+     LSFT(KC_BSPC ),LSFT(DE_A    ),LSFT(DE_S    ),LSFT(DE_D    ),LSFT(DE_F    ),LSFT(DE_G    ),LSFT(KC_INS  ),                          LSFT(KC_DEL  ),LSFT(DE_H    ),LSFT(DE_J    ),LSFT(DE_K    ),LSFT(DE_L    ),LT(2,DE_LOE),RGUI(LSFT(DE_AE)),
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     LSFT(KC_LSFT ),LSFT(DE_Z    ),LSFT(DE_X    ),LSFT(DE_C    ),LSFT(DE_V    ),LSFT(DE_B    ),LSFT(KC_APP  ),LSFT(KC_LGUI ),        LSFT(KC_HOME ),TT(1)   ,LSFT(DE_N    ),LSFT(DE_M    ),DE_LESS,DE_MORE,DE_QST,DE_COLN,
+     LSFT(KC_LSFT ),LSFT(DE_Z    ),LSFT(DE_X    ),LSFT(DE_C    ),LSFT(DE_V    ),LSFT(DE_B    ),LSFT(KC_APP  ),LSFT(KC_LGUI ),        LSFT(KC_HOME ),_______   ,LSFT(DE_N    ),LSFT(DE_M    ),DE_LESS,DE_MORE,DE_QST,DE_COLN,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
      LSFT(KC_LCTL ),DE_DQOT,MO(2)   ,LSFT(KC_LALT ),     MO(1)   ,    LSFT(KC_SPC  ),LSFT(KC_ENT  ),        LSFT(KC_ENT  ),MO(2)   ,    LSFT(KC_SPC  ),     LSFT(KC_RALT ),LSFT(KC_RALT ),DE_UNDS,LSFT(KC_RCTL)
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
@@ -84,11 +86,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAV] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                                            _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
+     DYN_REC_START1, DYN_MACRO_PLAY1 ,DYN_MACRO_PLAY2 ,_______ ,_______ ,_______ ,                                            _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,_______ ,DE_EURO ,_______ ,_______ ,_______ ,                          _______ ,KC_PGUP ,KC_HOME ,KC_UP ,KC_END    ,_______ ,_______ ,
+     DYN_REC_START2 ,_______ ,_______ ,DE_EURO ,_______ ,_______ ,_______ ,                          _______ ,KC_PGUP ,KC_HOME ,KC_UP ,KC_END    ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                          _______ ,KC_PGDN ,KC_LEFT ,KC_DOWN ,KC_RIGHT,_______ ,_______ ,
+     DYN_REC_STOP ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                          _______ ,KC_PGDN ,KC_LEFT ,KC_DOWN ,KC_RIGHT,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,        _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
@@ -96,6 +98,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	if (!process_record_dynamic_macro(keycode, record)) {
+        return false;
+    }
+	
+	return true;
 };
 
 void matrix_scan_user(void) {
@@ -118,5 +128,4 @@ void matrix_scan_user(void) {
             break;
     }
 };
-
 
