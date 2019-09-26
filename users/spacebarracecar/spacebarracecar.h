@@ -49,7 +49,8 @@ enum userspace_custom_keycodes {
   CU_RGBV,                  // Cycle through RGB brightness
   #endif
 
-  NEW_SAFE_RANGE            // Use for keymap specific keycodes
+  NEW_SAFE_RANGE,            // Use for keymap specific keycodes
+  DYNAMIC_MACRO_RANGE,
 };
 
 #ifdef GERMAN_ENABLE
