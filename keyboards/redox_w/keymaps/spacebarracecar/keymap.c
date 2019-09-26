@@ -1,7 +1,5 @@
 #include QMK_KEYBOARD_H
 
-#include "spacebarracecar.h"
-
 extern keymap_config_t keymap_config;
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
@@ -10,7 +8,7 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 #define _QWERTY 0
 #define _SYMB 1
-#define _NAV 2
+#define _NAVI 2
 #define _ADJUST 3
 
 enum custom_keycodes {
@@ -21,27 +19,28 @@ enum custom_keycodes {
   DYNAMIC_MACRO_RANGE,
 };
 
+#include "spacebarracecar.h"
 #include "dynamic_macro.h"
 
 // Shortcut to make keymap more readable
-#define RAV_OE LT(_NAV, DE_OE)
+#define RAV_OE LT(_NAVI, DE_OE)
 #define RAV_AE RGUI(DE_AE)
 
 #define LAY_SYMB MO(_SYMB)
-#define LAY_NAV MO(_NAV)
+#define LAY_NAVI MO(_NAVI)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_ESC  ,KC_F1   ,KC_F2   ,KC_F3   ,KC_F4   ,KC_F5   ,                                            KC_F7   ,KC_F8   ,KC_F9   ,KC_F10  ,KC_F11  ,KC_F12  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB  ,DE_Q    ,DE_W    ,DE_E    ,DE_R    ,DE_T    ,CU_GRV  ,                          KC_F6   ,CU_Y    ,DE_U    ,DE_I    ,DE_O    ,DE_P    ,DE_UE   ,
+     KC_TAB  ,DE_Q    ,DE_W    ,DE_E    ,DE_R    ,DE_T    ,CU_GRV  ,                          KC_F6   ,DE_Y    ,DE_U    ,DE_I    ,DE_O    ,DE_P    ,DE_UE   ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_BSPC ,DE_A    ,DE_S    ,DE_D    ,DE_F    ,DE_G    ,KC_INS  ,                          KC_DEL  ,DE_H    ,DE_J    ,DE_K    ,DE_L    ,RAV_OE  ,RAV_AE  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT ,CU_Z    ,DE_X    ,DE_C    ,DE_V    ,DE_B    ,KC_APP  ,KC_LGUI ,        KC_HOME ,TG(_SYMB),DE_N   ,DE_M    ,CU_COMM ,CU_DOT  ,CU_SLSH ,CU_SCLN ,
+     CU_LSFT ,DE_Z    ,DE_X    ,DE_C    ,DE_V    ,DE_B    ,KC_APP  ,KC_LGUI ,        KC_HOME ,TG(_SYMB),DE_N   ,DE_M    ,CU_COMM ,CU_DOT  ,CU_SLSH ,CU_SCLN ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     KC_LCTL ,CU_QUOT ,KC_LALT ,KC_LALT ,     LAY_SYMB,    KC_SPC  ,KC_ENT  ,        KC_ENT  ,LAY_NAV ,    KC_SPC  ,     KC_RALT ,KC_RALT ,DE_MINS ,KC_RCTL
+     KC_LCTL ,CU_QUOT ,KC_LALT ,KC_LALT ,     LAY_SYMB,    KC_SPC  ,KC_ENT  ,        KC_ENT  ,LAY_NAVI,    KC_SPC  ,     KC_RALT ,KC_RALT ,DE_MINS ,KC_RCTL
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
@@ -53,13 +52,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______ ,DE_HASH ,DE_DLR  ,DE_LBRC ,DE_RBRC ,DE_GRV  ,_______ ,                          _______ ,_______ ,DE_4    ,DE_5    ,DE_6    ,KC_PEQL ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,DE_PERC ,DE_CIRC ,DE_LPRN ,DE_RPRN ,DE_TILD ,_______ ,_______ ,        _______ ,_______ ,_______ ,DE_1    ,DE_2    ,DE_3    ,KC_PENT ,_______ ,
+     _______ ,DE_PERC ,DE_CIRC ,DE_LPRN ,DE_RPRN ,DE_TILD ,_______ ,_______ ,        _______ ,_______ ,_______ ,DE_1    ,DE_2    ,DE_3    ,DE_BSLS ,_______ ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,_______ ,_______ ,     _______ ,    _______ ,_______ ,        _______ ,_______ ,    KC_KP_0 ,     DE_DOT  ,DE_COMM ,DE_BSLS ,_______ 
+     _______ ,_______ ,_______ ,_______ ,     _______ ,    _______ ,_______ ,        _______ ,_______ ,    KC_KP_0 ,     DE_DOT  ,DE_COMM ,KC_PENT ,_______ 
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
-  [_NAV] = LAYOUT(
+  [_NAVI] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      DYN_REC_START1, DYN_MACRO_PLAY1 ,DYN_MACRO_PLAY2 ,_______ ,_______ ,_______ ,                                            _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -75,14 +74,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	if (!process_record_dynamic_macro(keycode, record)) {
-        return false;
-    }
-	
-	return true;
-};
-
 void matrix_scan_user(void) {
     uint8_t layer = biton32(layer_state);
 
@@ -93,14 +84,21 @@ void matrix_scan_user(void) {
         case _SYMB:
             set_led_green;
             break;
-        case _NAV:
-            set_led_blue;
+        case _NAVI:
+            set_led_red;
             break;
         case _ADJUST:
-            set_led_red;
+            set_led_blue;
             break;
         default:
             break;
     }
 };
 
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+	if (!process_record_dynamic_macro(keycode, record)) {
+        return false;
+    }
+	
+	return true;
+};

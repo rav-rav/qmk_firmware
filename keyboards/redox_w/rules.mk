@@ -56,10 +56,10 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #   comment out to disable the options.
 #
 #BOOTMAGIC_ENABLE = yes	# Virtual DIP switch configuration(+1000)
-MOUSEKEY_ENABLE = yes	# Mouse keys(+4700)
+#MOUSEKEY_ENABLE = yes	# Mouse keys(+4700)
 EXTRAKEY_ENABLE = yes	# Audio control and System control(+450)
-CONSOLE_ENABLE = yes	# Console for debug(+400)
-COMMAND_ENABLE = yes   # Commands for debug and configuration
+#CONSOLE_ENABLE = yes	# Console for debug(+400)
+#COMMAND_ENABLE = yes   # Commands for debug and configuration
 CUSTOM_MATRIX = yes    # Remote matrix from the wireless bridge
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 # SLEEP_LED_ENABLE = yes  # Breathing sleep LED during USB suspend
@@ -73,3 +73,6 @@ USB = /dev/ttyACM0
 
 # upload: build
 # 	$(REDOX_W_UPLOAD_COMMAND)
+
+# Userspace defines
+GERMAN_ENABLE = yes             # Enable Custom US Ansi Keycodes for PC with German set as input language 
