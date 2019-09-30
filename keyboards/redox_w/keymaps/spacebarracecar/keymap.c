@@ -1,7 +1,5 @@
 #include QMK_KEYBOARD_H
 
-extern keymap_config_t keymap_config;
-
 enum layers {
   _QWERTY,
   _SYMB,
@@ -13,7 +11,6 @@ enum layers {
 
 // Shortcut to make keymap more readable
 #define RAV_OE LT(_NAVI, DE_OE)
-#define RAV_AE RGUI(DE_AE)
 
 #define LAY_SYMB MO(_SYMB)
 #define LAY_NAVI MO(_NAVI)
@@ -31,11 +28,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB  ,DE_Q    ,DE_W    ,DE_E    ,DE_R    ,DE_T    ,CU_GRV  ,                          KC_F6   ,DE_Y    ,DE_U    ,DE_I    ,DE_O    ,DE_P    ,DE_UE   ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_BSPC ,DE_A    ,DE_S    ,DE_D    ,DE_F    ,DE_G    ,KC_INS  ,                          KC_DEL  ,DE_H    ,DE_J    ,DE_K    ,DE_L    ,RAV_OE  ,RAV_AE  ,
+     KC_BSPC ,DE_A    ,DE_S    ,DE_D    ,DE_F    ,DE_G    ,KC_INS  ,                          KC_DEL  ,DE_H    ,DE_J    ,DE_K    ,DE_L    ,RAV_OE  ,DE_AE   ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      CU_LSFT ,DE_Z    ,DE_X    ,DE_C    ,DE_V    ,DE_B    ,KC_APP  ,KC_LGUI ,        KC_PSCR ,TG(_SYMB),DE_N   ,DE_M    ,CU_COMM ,CU_DOT  ,CU_SLSH ,CU_SCLN ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     KC_LCTL ,CU_QUOT ,KC_LALT ,KC_LALT ,     LAY_SYMB,    KC_SPC  ,KC_ENT  ,        KC_ENT  ,LAY_NAVI,    KC_SPC  ,     KC_RALT ,KC_RALT ,DE_MINS ,KC_RCTL
+     KC_LCTL ,CU_QUOT ,KC_LALT ,KC_LALT ,     LAY_SYMB,    KC_SPC  ,KC_ENT  ,        KC_ENT  ,LAY_NAVI,    KC_SPC  ,     KC_RGUI ,KC_RALT ,DE_MINS ,KC_RCTL
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
@@ -49,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______ ,DE_PERC ,DE_CIRC ,DE_LPRN ,DE_RPRN ,DE_TILD ,_______ ,_______ ,        _______ ,_______ ,_______ ,DE_1    ,DE_2    ,DE_3    ,DE_BSLS ,_______ ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,_______ ,_______ ,     _______ ,    _______ ,_______ ,        _______ ,_______ ,    KC_KP_0 ,     DE_DOT  ,DE_COMM ,KC_PENT ,_______ 
+     _______ ,_______ ,_______ ,_______ ,     _______ ,    _______ ,_______ ,        _______ ,_______ ,    DE_0    ,     DE_DOT  ,DE_COMM ,KC_PENT ,_______ 
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
@@ -82,9 +79,6 @@ void matrix_scan_user(void) {
         case _NAVI:
             set_led_red;
             break;
-        /*case _ADJUST:
-            set_led_blue;
-            break;*/
         default:
             break;
     }
