@@ -1,22 +1,31 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 
-#define BASE 0 // default layer
-#define SYMB 1 // symbols
-#define MDIA 2 // media keys
-
-enum custom_keycodes {
-#ifdef ORYX_CONFIGURATOR
-  EPRM = EZ_SAFE_RANGE,
-#else
-  EPRM = SAFE_RANGE,
-#endif
-  VRSN,
-  RGB_SLD
+enum layers {
+  _BASE,
+  _SYMB,
+  _NAVI,
 };
+
+#include "spacebarracecar.h"
+
+// Shortcut to make keymap more readable
+#define RAV_OE LT(_NAVI, DE_OE)
+
+#define LAY_SYMB MO(_SYMB)
+#define LAY_NAVI MO(_NAVI)
+
+#define M1_REC DYN_REC_START1
+#define M2_REC DYN_REC_START1
+#define M1_PLAY DYN_REC_START1
+#define M2_PLAY DYN_REC_START1
+#define M_STOP DYN_REC_START1
+
+#define BASE 0
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_ergodox(
+
   // left hand
   //┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐
      KC_ESC  ,KC_F1   ,KC_F2   ,KC_F3   ,KC_F4   ,KC_F5   ,  CU_GRV,
@@ -56,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┘
 ),
 
-[SYMB] = LAYOUT_ergodox(
+[_SYMB] = LAYOUT_ergodox(
   // left hand
   //┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐
      _______ ,DE_CIRC ,DE_SQ2  ,DE_SQ3  ,DE_PARA ,DE_RING ,_______ ,
@@ -96,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┘
 ),
 
-[MDIA] = LAYOUT_ergodox(
+[_NAVI] = LAYOUT_ergodox(
   // left hand
   //┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐
      M1_REC  ,M1_PLAY ,M2_PLAY ,_______ ,_______ ,_______ ,_______ ,
@@ -136,25 +145,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┘
 ),
 };
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    switch (keycode) {
-      case EPRM:
-        eeconfig_init();
-        return false;
-      case VRSN:
-        SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-        return false;
-      #ifdef RGBLIGHT_ENABLE
-      case RGB_SLD:
-        rgblight_mode(1);
-        return false;
-      #endif
-    }
-  }
-  return true;
-}
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
