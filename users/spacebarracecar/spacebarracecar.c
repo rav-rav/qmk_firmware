@@ -251,25 +251,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return false;
   case CU_QUOT:
-    if(record->event.pressed){
-      timer_timeout();
-      register_code(KC_LSFT);
-      if (lshift || rshift){
-        layer_on(_DEADKEY);
-      } else {
-        unregister_code(DE_HASH);
-        register_code(DE_HASH);
-        add_to_prev(DE_HASH);
-      }
-    } else {
-      unregister_code(DE_HASH);
-      unreg_prev();
-      if (lshift || rshift)
-        register_code(KC_LSFT);
-      else
-        unregister_code(KC_LSFT);
-    }
-    return false;
+    SHIFT_ALL(DE_HASH, DE_2)
   case CU_6:
     if(record->event.pressed){
       timer_timeout();
